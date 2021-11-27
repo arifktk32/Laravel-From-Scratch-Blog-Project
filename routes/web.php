@@ -24,7 +24,17 @@ Route::get('/posts/{post}', function ($slug) {
         abort(404);
     }
 
-    $post = file_get_contents($path);
+    /**
+     * Closure function
+     */
+    // $post = cache()->remember('posts'.$slug, 1200, function() use ($path) {
+    //     return file_get_contents($path);
+    // });
+
+    /**
+     * Arrow function
+     */
+    $post = cache()->remember('posts'.$slug, 1200, fn() => file_get_contents($path));
 
     return view('post', [
         'post' => $post
