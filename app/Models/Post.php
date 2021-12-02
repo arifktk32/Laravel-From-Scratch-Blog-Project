@@ -23,36 +23,24 @@ class Post {
     }
 
     public static function find($slug) {
-        $path = resource_path("posts/{$slug}.html");
-    
-        if(! file_exists($path)) {
-            throw new ModelNotFoundException();
-        }
-
-        return (YamlFrontMatter::parseFile($path));
+        return static::all()->firstWhere('slug', $slug);
     }
     
     public static function all() {
-        $files = File::files(resource_path("/posts"));
-
         /**
          * Laravel Collection approach
          *
          */
-        $posts = collect($files)
-        ->map(function($file) {
-            return YamlFrontMatter::parseFile($file);
-        })->map(function($document) {
-            return new Post(
-                $document->title,
-                $document->slug,
-                $document->excerpt,
-                $document->date,
-                $document->body()
-            );
-        });
-
-        return $posts;
+        return collect(File::files(resource_path("posts")))
+                ->map( fn($file) => YamlFrontMatter::parseFile($file))
+                ->map( fn($document) => new Post(
+                        $document->title,
+                        $document->slug,
+                        $document->excerpt,
+                        $document->date,
+                        $document->body()
+                    )
+                );
 
         //$posts = [];
         
