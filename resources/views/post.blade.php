@@ -6,10 +6,10 @@
     </head>
     <body>
         <article>
-            <h1><?= $post->title; ?></h1>
+            <h1>{{ $post->title }}</h1>
 
             <div>
-                <?php echo $post->body; ?>
+                {!! $post->body !!}
             </div>
         </article>
         <a href="/">Go Back</a>
