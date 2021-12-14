@@ -12,4 +12,9 @@ class Post extends Model
     protected $guarded = []; // Allow Mass Assignment for all field. !! Watch Out !!
     // protected $guarded = ["id"]; // Guard id column and allow the rest
     // protected $fillable = ["title", "slug", "excerpt", "body"];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
