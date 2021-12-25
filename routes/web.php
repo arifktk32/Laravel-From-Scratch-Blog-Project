@@ -17,18 +17,12 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
-
-    DB::listen(function($query) {
-        logger($query->sql, $query->bindings);
-    });
-    
     return view('posts', [
         'posts' => Post::with("category")->get()
     ]);
 });
 
 Route::get('/posts/{post}', function (Post $post) {
-
     return view('post', [
         'post' => $post
     ]);
