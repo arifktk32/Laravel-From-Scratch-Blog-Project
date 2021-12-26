@@ -9,9 +9,9 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $guarded = []; // Allow Mass Assignment for all field. !! Watch Out !!
-    // protected $guarded = ["id"]; // Guard id column and allow the rest
-    // protected $fillable = ["title", "slug", "excerpt", "body"];
+    protected $guarded = [];
+
+    protected $with = ['category', 'author'];
 
     public function getRouteKeyName()
     {
